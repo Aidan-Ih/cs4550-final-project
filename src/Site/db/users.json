@@ -1,0 +1,80 @@
+[
+    {
+        "_id": 1,
+        "username": "cuomorivers",
+        "firstName": "Rivers",
+        "lastName": "Cuomo",
+        "bio": "My name is Rivers Cuomo. I play the lead guitar.",
+        "email": "cuomo.r@weezer.edu",
+        "phone": "123-456-7890",
+        "picture":"rivers.png",
+        "following": [
+            2,
+            3,
+            4
+        ],
+        "followers": [
+            2
+        ],
+        "loggedIn": true
+    },
+    {
+        "_id": 2,
+        "username": "brrriiiaaann",
+        "firstName": "Brian",
+        "lastName": "Bell",
+        "bio": "My name is Brian Bell",
+        "email": "bell.b@weezer.edu",
+        "phone": "098-765-4321",
+        "picture":"brian.PNG",
+        "following": [
+            1,
+            3,
+            4
+        ],
+        "followers": [
+            1,
+            3,
+            4
+        ],
+        "loggedIn": false
+    },
+    {
+        "_id": 3,
+        "username": "drums_pat",
+        "firstName": "Patrick",
+        "lastName": "Wilson",
+        "bio": "My name is Patrick Wilson. I play the drums.",
+        "email": "wilson.p@weezer.edu",
+        "phone": "098-765-4321",
+        "picture":"patrick.PNG",
+        "following": [
+            2,
+            4
+        ],
+        "followers": [
+            1,
+            2
+        ],
+        "loggedIn": false
+    },
+    {
+        "_id": 4,
+        "username": "yolo_swag",
+        "firstName": "Scott",
+        "lastName": "Shriner",
+        "bio": "My name is Scott Shriner",
+        "email": "shriner.s@weezer.edu",
+        "phone": "098-765-4321",
+        "picture":"scott.PNG",
+        "following": [
+            2
+        ],
+        "followers": [
+            1,
+            2,
+            3
+        ],
+        "loggedIn": false
+    }
+]
