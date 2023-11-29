@@ -1,35 +1,45 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import "./index.css";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 import profilePic from "./images/profilepic.png"
-import { useDispatch, useSelector } from "react-redux";
-import { updateProfile } from "./profileReducer";
+import * as client from "./client";
 
 function Profile() {
-    const dispatch = useDispatch();
-    const { pathname } = useLocation();
-    // Extract ID from the last element in the path
-    const pathList = pathname.split("/");
-    var id = Number(pathList[2]);
-
-    // Get users list from reducer state
-    const users = useSelector((state) => state.profileReducer.users);
-    const loggedInUser = users.find((u) => u.loggedIn);
-
-    // If user id isn't in the path, set user to logged in user
-    // if path length is 2 that means last element in path is /profile
-    if (isNaN(id) && pathList.length === 2) {
-        id = loggedInUser._id;
-        // If path length isn't 2 and the last element is not a number, page is undefined
-    } else if (isNaN(id)) {
-        id = -1;
+    const { id } = useParams();
+    const [user, setUser] = useState(null);
+    // This variable is true if the logged in user is viewing their own profile
+    const [loggedInUser, setLoggedInUser] = useState(null);
+    const navigate = useNavigate();
+    const findUserById = async (id) => {
+        const thisUser = await client.findUserById(id);
+        setUser(thisUser);
+    };
+    const fetchAccount = async () => {
+        const account = await client.account();
+        setUser(account);
+        setLoggedInUser(account);
+    };
+    const signout = async () => {
+        await client.signout();
+        navigate("/SignIn");
+    };
+    const fetchLoggedInUser = async () => {
+        const account = await client.loggedInUser();
+        setLoggedInUser(account);
     }
-    const user = users.find((u) => id === u._id);
-    // If user is not found, page is undefined
-    if (user === undefined) {
-        id = -1;
-    }
-
+    useEffect(() => {
+        if (id) {
+            findUserById(id);
+            fetchLoggedInUser();
+        } else {
+            fetchAccount();
+        }
+    }, []);
+    const saveUser = async (user) => {
+        await client.updateUser(user);
+        navigate(`/profile/${id}`)
+    };
     // Handles unfollowing this user
     // Removes the logged in user's ID from the follower list of this user
     // Removes this user's ID from the following list of the logged in user
@@ -44,8 +54,10 @@ function Profile() {
             ...loggedInUser,
             following: newFollowingList,
         };
-        dispatch(updateProfile(updatedUser));
-        dispatch(updateProfile(updatedLoggedInUser));
+        saveUser(updatedUser);
+        saveUser(updatedLoggedInUser);
+        setUser(updatedUser);
+        setLoggedInUser(updatedLoggedInUser);
     }
 
     // Handles following this user
@@ -62,15 +74,15 @@ function Profile() {
             ...user,
             followers: newFollowerList,
         };
-        dispatch(updateProfile(updatedLoggedInUser));
-        dispatch(updateProfile(updatedUser));
+        saveUser(updatedUser);
+        saveUser(updatedLoggedInUser);
+        setUser(updatedUser);
+        setLoggedInUser(updatedLoggedInUser);
     }
 
     return (
         <div className="container">
-            {/* If the id is -1, this page is undefined so show error */}
-            {/* Else, display the user's profile */}
-            {id === -1 ? (<h1>Profile not found</h1>) : (
+            {user && loggedInUser && (
                 <div className="row">
                     <div className="col-lg-2 col-md-3 col-sm-12 profile-left">
                         <img className="profile-picture" src={profilePic} alt="Profile" />
@@ -79,13 +91,13 @@ function Profile() {
                         <h3 className="profile-content">{user.username}</h3>
                         <div className="row profile-content">
                             <div className="col">
-                                <Link to={`/profile/${id}/followers`}
+                                <Link to={`followers`}
                                     className="follow-link">
                                     Followers&nbsp;{user.followers.length}
                                 </Link>
                             </div>
                             <div className="col">
-                                <Link to={`/profile/${id}/following`}
+                                <Link to={`following`}
                                     className="follow-link">
                                     Following&nbsp;{user.following.length}
                                 </Link>
@@ -102,12 +114,15 @@ function Profile() {
                     </div>
                     <div className="col-lg-3 col-md-3 col-sm-12">
                         {/* Show this button only if this is the profile of the logged in user */}
-                        {user.loggedIn && <Link to={`/profile/edit-profile`}><button>Edit Profile</button></Link>}
+                        {loggedInUser._id === user._id && <div>
+                            <Link to={`/profile/edit-profile`}><button>Edit Profile</button></Link>
+                            <button onClick={signout}>Sign Out</button>
+                        </div>}
                         {/* Show this button only if this is NOT the profile of the logged in user and the logged in user is following this user */}
-                        {!user.loggedIn && user.followers.includes(loggedInUser._id) &&
+                        {loggedInUser._id !== user._id && user.followers.includes(loggedInUser._id) &&
                             <button onClick={() => { handleUnfollow(); }}>Unfollow</button>}
                         {/* Show this button only if this is NOT the profile of the logged in user and the logged in user is NOT following this user */}
-                        {!user.loggedIn && !user.followers.includes(loggedInUser._id) &&
+                        {loggedInUser._id !== user._id && !user.followers.includes(loggedInUser._id) &&
                             <button onClick={() => { handleFollow(); }}>Follow</button>}
                     </div>
                 </div>)}

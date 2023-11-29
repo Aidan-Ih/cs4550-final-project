@@ -3,8 +3,11 @@ function Site() {
     return (
         <div>
             {<h1>CS4550 Final Project</h1>}
-            <Link to={`/profile`}>
-                <button>Profile</button>
+            <Link to={`/SignIn`}>
+                <button>Sign In</button>
+            </Link>
+            <Link to={`/SignUp`}>
+                <button>Sign Up</button>
             </Link>
         </div>
     );
