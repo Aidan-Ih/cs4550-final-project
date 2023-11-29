@@ -1,0 +1,52 @@
+.container {
+    padding: 30px;
+}
+
+.profile-picture {
+    width: 150px;
+    height: 150px;
+    border: 2px solid black;
+    border-radius: 50%;
+    object-fit: cover; 
+  }
+
+  .profile-left {
+    display: grid;
+    min-width: 200px;
+    height: 100%;
+    display: flex;
+    flex-direction: column; 
+    justify-content: flex-start; 
+  }
+
+  .profile-content {
+    padding: 15px;
+  }
+
+  .follow-link {
+    color: black;
+    text-decoration: none;
+  }
+  
+  .follow-link:hover {
+    text-decoration: underline;
+  }
+
+  .follow-top-bar {
+    width: 300px;
+  }
+
+  .nav-link {
+    padding: 5px 10px; 
+  }
+
+  .nav-link:hover {
+    background-color: #f0f0f0; 
+  }
+  
+  .follow-list {
+    list-style-type: none;
+    padding: 10px;
+  }
+
+ 
