@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import profilePic from "./images/profilepic.png"
 import "./index.css";
 import * as client from "./client";
+import {Button} from "react-bootstrap";
 
 // Displays the followers or users following the current selected user, depending on the path
 function Follow() {
@@ -77,12 +78,12 @@ function Follow() {
                     </div>
                     <div className="col-lg-2 col-md-6 col-sm-12">
                         <nav className="nav nav-pills nav-fill follow-top-bar">
-                            <button className={`nav-link ${pathname.includes("followers") && "active"}`}
-                                onClick={navigateToFollowers}>Followers</button>
-                            <button className={`nav-link ${pathname.includes("following") && "active"}`}
-                                onClick={navigateToFollowing}>Following</button>
-                            <button className={`nav-link`}
-                                onClick={navigateToProfile}>Back</button>
+                            <Button className={`nav-link ${pathname.includes("followers") && "active"}`}
+                                onClick={navigateToFollowers}>Followers</Button>
+                            <Button className={`nav-link ${pathname.includes("following") && "active"}`}
+                                onClick={navigateToFollowing}>Following</Button>
+                            <Button className={`nav-link`}
+                                onClick={navigateToProfile}>Back</Button>
                         </nav>
                         {page === "followers" && (<div className="follow-list-container">
                             {user.followers.map((id) => (

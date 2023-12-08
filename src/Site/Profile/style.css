@@ -1,3 +1,21 @@
 .input-box {
     margin-bottom: 15px;
 }
+
+.signin-box {
+    padding-left: 30px;
+    width: 300px;
+}
+
+.btn-signin {
+    margin-left: 30px;
+    color: grey !important;
+    background-color: white !important;
+    border: grey 2px solid !important;
+}
+
+.btn-signin:hover {
+    background-color: grey !important;
+    color: white !important;
+    border: grey !important;
+}

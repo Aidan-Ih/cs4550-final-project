@@ -1,7 +1,7 @@
 import * as client from "./client";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {Button} from "react-bootstrap";
+import {Button, Form} from "react-bootstrap";
 import "./style.css"
 function Signin() {
     const [credentials, setCredentials] = useState({ username: "", password: "" });
@@ -29,13 +29,26 @@ function Signin() {
                     {errorMessage}
                 </div>
             )}
-            <label for = "signin-username" className= "input-box"> Username:</label>
-            <input name = "signin-username" value={credentials.username} onChange={(e) => setCredentials({ ...credentials, username: e.target.value })} />
-            <br/>
-            <label for="signin-password"> Password:</label>
-            <input name = "signin-password" value={credentials.password} onChange={(e) => setCredentials({ ...credentials, password: e.target.value })} />
-            <br/><br/>
-            <Button  className="btn-secondary" onClick={signin}>Sign in</Button>
+
+
+            <Form>
+                <Form.Group className="mb-3 signin-box" controlId="signinUser">
+                    <Form.Label>Username</Form.Label>
+                    <Form.Control type="string" placeholder="Username"
+                                  value = {credentials.username}
+                                  onChange={(e) =>
+                                      setCredentials({ ...credentials, username: e.target.value })}/>
+                </Form.Group>
+                <Form.Group className="mb-3 signin-box" controlId="signinPass">
+                    <Form.Label> Password </Form.Label>
+                    <Form.Control type="password" placeholder="Password"
+                                  value = {credentials.password}
+                                  onChange={(e) =>
+                                      setCredentials({ ...credentials, password: e.target.value })}/>
+                </Form.Group>
+            </Form>
+
+            <Button  className="btn-signin" onClick={signin}>Sign in</Button>
         </div>
     );
 }

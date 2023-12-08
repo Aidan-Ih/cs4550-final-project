@@ -4,6 +4,7 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import profilePic from "./images/profilepic.png"
 import * as client from "./client";
+import {Button} from "react-bootstrap";
 
 function Profile() {
     const { id } = useParams();
@@ -88,7 +89,25 @@ function Profile() {
                         <img className="profile-picture" src={profilePic} alt="Profile" />
                     </div>
                     <div className="col-lg-7 col-md-6 col-sm-12">
-                        <h3 className="profile-content">{user.username}</h3>
+
+                        <div className = "row">
+                            <div className = "col">
+                                <h2 className=" profile-content"> {user.firstName}&nbsp;{user.lastName}</h2>
+                                <h4 className=" profile-content"> {user.username}</h4>
+                            </div>
+
+                            <div className = "col">
+                                {/* Show this button only if this is the profile of the logged in user */}
+                                {loggedInUser._id === user._id && <div>
+                                    <Link to={`/profile/edit-profile`}>
+                                        <Button className= "btn-edit">Edit Profile</Button>
+                                    </Link>
+                                    <Button className = "btn-signout" onClick={signout}>Sign Out</Button>
+                                </div>}
+                            </div>
+
+                        </div>
+
                         <div className="row profile-content">
                             <div className="col">
                                 <Link to={`followers`}
@@ -103,27 +122,33 @@ function Profile() {
                                 </Link>
                             </div>
                         </div>
+                        {/*<div className="profile-content">*/}
+                        {/*    <h4>Name:</h4>*/}
+                        {/*    <div className="name">{user.firstName}&nbsp;{user.lastName}</div>*/}
+                        {/*</div>*/}
                         <div className="profile-content">
-                            <h4>Name:</h4>
-                            <div className="name">{user.firstName}&nbsp;{user.lastName}</div>
-                        </div>
-                        <div className="profile-content">
-                            <h4>Biography:</h4>
-                            <div className="bio text-break">{user.bio}</div>
+                            {/*<h4>Biography:</h4>*/}
+                            <div className="bio text-break">
+                               <h5>{user.bio} </h5>
+                            </div>
                         </div>
                     </div>
                     <div className="col-lg-3 col-md-3 col-sm-12">
                         {/* Show this button only if this is the profile of the logged in user */}
-                        {loggedInUser._id === user._id && <div>
-                            <Link to={`/profile/edit-profile`}><button>Edit Profile</button></Link>
-                            <button onClick={signout}>Sign Out</button>
-                        </div>}
+                        {/*{loggedInUser._id === user._id && <div>*/}
+                        {/*    <Link to={`/profile/edit-profile`}>*/}
+                        {/*        <Button className= "btn-edit">Edit Profile</Button>*/}
+                        {/*    </Link>*/}
+                        {/*    <Button className = "btn-signout" onClick={signout}>Sign Out</Button>*/}
+                        {/*</div>}*/}
+
+
                         {/* Show this button only if this is NOT the profile of the logged in user and the logged in user is following this user */}
                         {loggedInUser._id !== user._id && user.followers.includes(loggedInUser._id) &&
-                            <button onClick={() => { handleUnfollow(); }}>Unfollow</button>}
+                            <Button onClick={() => { handleUnfollow(); }}>Unfollow</Button>}
                         {/* Show this button only if this is NOT the profile of the logged in user and the logged in user is NOT following this user */}
                         {loggedInUser._id !== user._id && !user.followers.includes(loggedInUser._id) &&
-                            <button onClick={() => { handleFollow(); }}>Follow</button>}
+                            <Button onClick={() => { handleFollow(); }}>Follow</Button>}
                     </div>
                 </div>)}
         </div>
