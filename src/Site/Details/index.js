@@ -1,11 +1,14 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
 import axios from 'axios'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import "./index.css"
 import { useParams } from 'react-router';
 
 function Details() {
-    const [event, setEvent] = useState({});
+    const [event, setEvent] = useState({
+        images: [{ type: "profile", url: "" }],
+        events: []
+    });
     const { tournamentId } = useParams();
 
     const getEventById = async () => {
@@ -37,6 +40,15 @@ function Details() {
         return formatted
     }
 
+    const getEntrants = (events) => {
+        console.log(events);
+        var entrants = []
+    }
+
+    useEffect(() => {
+        getEventById()
+    }, []);
+
     return (
         <div>
             <h1>Details</h1>
@@ -45,13 +57,36 @@ function Details() {
             </div>
             <div>
                 <h2>{event.name}</h2>
-                Data: Put stuff here <br></br>
-                Attendees: List here
+                <img className="event-profile-image"
+                    src={event.images.find((i) => i.type === "profile").url}></img>
+                <div className="list-group">
+                    <div className="list-group-item">
+                        {event.venueAddress}
+                    </div>
+                    <div className="list-group-item">
+                        {getDateFromUnix(event.startAt)}
+                    </div>
+                    <div className="list-group-item">
+                        <div >
+                            <h2>Events:</h2>
+
+                            {event.events.map((e, i) => {
+                                return (
+                                    <div key={i}>
+                                        {e.name}
+                                    </div>
+                                )
+                            })}
+                        </div>
+                    </div>
+                    <div className="list-group-item">
+                        <h2>Entrants:</h2>
+                        {getEntrants(event.events)}
+                    </div>
+                </div>
             </div>
-
-
-
         </div>
+
     );
 }
 
