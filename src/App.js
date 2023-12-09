@@ -10,11 +10,15 @@ import ProfileEditor from './Site/Profile/profileEditor';
 import Follow from './Site/Profile/follow';
 import Signin from './Site/Profile/signin';
 import Signup from './Site/Profile/signup';
+import Site from "./Site";
+import Login from './Site/Profile/login';
+import NavBar from './Site/Nav';
 
 function App() {
   return (
     <HashRouter>
       <div>
+        <NavBar />
         <Routes>
           <Route path="/" element={<Navigate to="Homepage" />} />
           <Route path="Homepage" element={<Homepage />} />
@@ -27,9 +31,10 @@ function App() {
           <Route path="profile/following" element={<Follow />} />
           <Route path="profile/:id/followers" element={<Follow />} />
           <Route path="profile/:id/following" element={<Follow />} />
-          <Route path="Details/:tournamentId" element={<Details/>}/>
-          <Route path="Search" element={<Search/>}/>
-          <Route path="SearchResult" element={<SearchResult/>}/>
+          <Route path="Details/:tournamentId" element={<Details />} />
+          <Route path="Search" element={<Search />} />
+          <Route path="SearchResult" element={<SearchResult />} />
+          <Route path="Login" element={<Login />} />
         </Routes>
       </div>
     </HashRouter>

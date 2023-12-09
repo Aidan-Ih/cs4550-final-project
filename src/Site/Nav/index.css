@@ -1,0 +1,23 @@
+.navbar-wrapper {
+    overflow: hidden;
+    display: flex;
+    justify-content: space-between;
+    height: fit-content;
+}
+
+.navbar-link {
+    color: black;
+    margin: 5px;
+    text-decoration: none;
+    width: fit-content;
+}
+
+.nav-link:hover {
+    background-color: #ddd;
+    color: black;
+}
+
+.left-links {
+    display: flex;
+    align-items: center;
+}
