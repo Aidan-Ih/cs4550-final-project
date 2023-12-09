@@ -1,6 +1,9 @@
+import Homepage from "./Homepage";
 function Site() {
     return (
-        <h1>CS4550 Final Project</h1>
+        <div>
+            <Homepage/>
+        </div>
     );
 }
 
