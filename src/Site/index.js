@@ -1,9 +1,11 @@
+import Homepage from "./Homepage";
 import { Link } from "react-router-dom";
 import {Button} from "react-bootstrap";
 import "./Profile/style.css"
 function Site() {
     return (
         <div>
+            
             {<h1>CS4550 Final Project</h1>}
             {<h2>Login</h2>}
             <br/>
@@ -14,6 +16,7 @@ function Site() {
             <Link to={`/SignUp`}>
                 <Button className="btn-signin">Sign Up</Button>
             </Link>
+            <Homepage/>
         </div>
     );
 }
