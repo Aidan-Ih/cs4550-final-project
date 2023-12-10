@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import "./index.css";
 import * as client from "./client";
-import profilePic from "./images/profilepic.png"
 import {Button, Form} from "react-bootstrap";
 
 function ProfileEditor() {
@@ -14,7 +13,7 @@ function ProfileEditor() {
         setUser(account);
     };
     const save = async () => {
-        await client.updateUser(user);
+        await client.updateUser(user, true);
         navigate("/profile");
     };
     useEffect(() => {
@@ -24,9 +23,6 @@ function ProfileEditor() {
         <div className="container">
             {user && (
                 <div className="row">
-                    <div className="col-lg-2 col-md-3 col-sm-12 profile-left">
-                        <img className="profile-picture" src={profilePic} alt="Profile" />
-                    </div>
                     <div className="col-lg-7 col-md-6 col-sm-12">
                         <h3>Edit Profile</h3>
 
