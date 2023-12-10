@@ -1,0 +1,19 @@
+.search-form {
+    width: 500px;
+    margin-left: 20px;
+}
+
+.btn-search {
+    background-color: white !important;
+    margin-left: 20px;
+    justify-content: center;
+    border: darkgreen 2px solid !important;
+    color: darkgreen !important;
+}
+
+.btn-search:hover {
+    background-color: darkgreen !important;
+    border: darkgreen 2px solid !important;
+    color: white !important;
+}
+

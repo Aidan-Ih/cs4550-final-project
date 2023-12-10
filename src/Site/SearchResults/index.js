@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
 import axios from 'axios'
 import { useState, useEffect } from 'react';
-import "./index.css"
+import "./searchresults.css"
 import { useParams } from 'react-router';
 import { useSearchParams, Link } from 'react-router-dom';
 
@@ -53,9 +53,8 @@ function SearchResult() {
 
     return (
         <div>
-            <h1>Search Results</h1>
-            <button className="btn btn-secondary" onClick={search}>Test</button>
-
+            <br/>
+            <h1 className = "header-title">Search Results: </h1>
             <div className="list-group eventListContainer">
                     {events.map((e, i) => {
                         return (
@@ -63,7 +62,7 @@ function SearchResult() {
                                 <img className="eventListItemPic"
                                     src={e.images.find((i) => i.type === "profile").url}></img>
                                 <div className="tournament-info-container">
-                                    <Link to={`/Details/${e.id}`}> <b className="tournament-title"> {e.name}</b> </Link> 
+                                    <Link to={`/Details/${e.id}`} className="tournament-title"> {e.name} </Link>
                                     <div>{getDateFromUnix(e.startAt)}</div>
                                     <div>{e.city}, MA</div>
                                     <div>ID: {e.id}</div>

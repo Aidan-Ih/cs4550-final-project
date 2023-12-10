@@ -3,6 +3,10 @@ import axios from 'axios'
 import { useState, useEffect } from 'react';
 import "./index.css"
 import { useParams } from 'react-router';
+import '@fortawesome/fontawesome-free/css/all.min.css';
+
+
+
 
 function Details() {
     const [event, setEvent] = useState({
@@ -51,20 +55,26 @@ function Details() {
 
     return (
         <div>
-            <h1>Details</h1>
-            <div>
-                <button className="btn btn-danger" onClick={getEventById}>GET EVENT</button>
+
+            <div className= "row">
+                <h1>Event Details</h1>
             </div>
-            <div>
-                <h2>{event.name}</h2>
-                <img className="event-profile-image"
-                    src={event.images.find((i) => i.type === "profile").url}></img>
-                <div className="list-group">
+            {/*<div>*/}
+            {/*    <button className="btn btn-danger" onClick={getEventById}>GET EVENT</button>*/}
+            {/*</div>*/}
+            <div className = " row title">{event.name}</div>
+            <div className = "row event-details">
+                <div className= "col-3 nopad">
+                    <img className="event-profile-image"
+                         src={event.images.find((i) => i.type === "profile").url}></img>
+                </div>
+                <br/> <br/>
+                <div className=" col-5 list-group">
                     <div className="list-group-item">
-                        {event.venueAddress}
+                        <i className="fa-solid fa-location-dot"></i> {event.venueAddress}
                     </div>
                     <div className="list-group-item">
-                        {getDateFromUnix(event.startAt)}
+                        <i className="fa-regular fa-calendar"></i> {getDateFromUnix(event.startAt)}
                     </div>
                     <div className="list-group-item">
                         <div >

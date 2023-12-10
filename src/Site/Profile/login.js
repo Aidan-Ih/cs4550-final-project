@@ -1,15 +1,16 @@
 import React from 'react';
 import { Link } from "react-router-dom";
 import "./style.css";
+import {Button} from "react-bootstrap";
 
 function Login() {
     return(
         <div>
             <Link to={`/SignIn`}>
-                <button className="btn-signin">Sign In</button>
+                <Button className="btn-signin">Sign In</Button>
             </Link>
             <Link to={`/SignUp`}>
-                <button className="btn-signin">Sign Up</button>
+                <Button className="btn-signin">Sign Up</Button>
             </Link>
         </div>
     );
