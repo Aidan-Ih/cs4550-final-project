@@ -6,10 +6,10 @@
 
 .title {
     text-decoration: underline;
-    justify-content: center !important;
     font-size: 30px;
+    text-align: center;
+    padding-bottom: 20px;
 }
-
 
 .event-details {
     margin-left: 20px;

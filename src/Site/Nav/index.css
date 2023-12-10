@@ -23,3 +23,7 @@
 .nav-icon {
     margin: 10px;
 }
+
+.btn-profile:hover {
+    background-color: white !important ;
+}

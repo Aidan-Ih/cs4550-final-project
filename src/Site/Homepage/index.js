@@ -8,9 +8,7 @@ import { useSelector } from "react-redux";
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import * as client from "../Profile/client";
 import { useDispatch } from "react-redux";
-import {
-    setLoggedInUser
-} from "../reducer";
+import { setLoggedInUser} from "../reducer";
 import { useEffect } from "react";
 
 function Homepage() {
