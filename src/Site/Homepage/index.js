@@ -16,9 +16,10 @@ function Homepage() {
     const [events, setEvents] = useState([]);
     const _loggedInUser = useSelector((state) => state.reducer.loggedInUser);
     const [loggedInUser, setLoggedInUser_] = useState(_loggedInUser);
+    const API_BASE = process.env.REACT_APP_API_BASE;
 
     const getRecentEvents = async () => {
-        const response = await axios.get("http://localhost:4000/getRecent");
+        const response = await axios.get(`${API_BASE}/getRecent`);
         const data = response.data;
         setEvents(data);
         console.log(data);

@@ -24,6 +24,7 @@ function Details() {
     const [loggedInUser, setLoggedInUser_] = useState(_loggedInUser);
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const API_BASE = process.env.REACT_APP_API_BASE;
 
     const fetchAccount = async () => {
         const account = await userClient.account();
@@ -32,7 +33,7 @@ function Details() {
     };
 
     const getEventById = async () => {
-        const response = await axios.get(`http://localhost:4000/getEvent/${tournamentId}`)
+        const response = await axios.get(`${API_BASE}/getEvent/${tournamentId}`);
         const data = response.data[0]
         setEvent(data)
         //console.log(data)

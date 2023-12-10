@@ -29,7 +29,9 @@ function SearchResult() {
         before = Math.floor(new Date(before).getTime() / 1000)
         after = Math.floor(new Date(after).getTime() / 1000)
         
-        const url = `http://localhost:4000/searchEvent/${name}/${before}/${after}`
+        const API_BASE = process.env.REACT_APP_API_BASE;
+        const url = `${API_BASE}/searchEvent/${name}/${before}/${after}`;
+       // const url = `http://localhost:4000/searchEvent/${name}/${before}/${after}`
         console.log(url)
         const response = await axios.get(url)
         const data = response.data
