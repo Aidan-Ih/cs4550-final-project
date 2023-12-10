@@ -10,11 +10,8 @@
     margin: 5px;
     text-decoration: none;
     width: fit-content;
-}
-
-.nav-link:hover {
-    background-color: #ddd;
-    color: black;
+    border: none;
+    background-color: white;
 }
 
 .left-links {

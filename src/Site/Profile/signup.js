@@ -7,7 +7,12 @@ import "./style.css"
 function Signup() {
     const [error, setError] = useState("");
     const [credentials, setCredentials] = useState({
-        username: "", password: ""
+        username: "",
+        password: "",
+        firstName: "",
+        lastName: "",
+        email: "",
+        phone: ""
     });
     const navigate = useNavigate();
     const signup = async () => {
@@ -17,6 +22,16 @@ function Signup() {
         } catch (err) {
             setError(err.response.data.message);
         }
+    };
+    const isFormValid = () => {
+        return (
+            credentials.username &&
+            credentials.password &&
+            credentials.firstName &&
+            credentials.lastName &&
+            credentials.email &&
+            credentials.phone
+        );
     };
     return (
         <div>
@@ -38,9 +53,37 @@ function Signup() {
                                   onChange={(e) =>
                                       setCredentials({ ...credentials, password: e.target.value })}/>
                 </Form.Group>
+                <Form.Group className="mb-3 signin-box" controlId="signinFirstName">
+                    <Form.Label> First Name </Form.Label>
+                    <Form.Control type="firstName" placeholder="First Name"
+                                  value = {credentials.firstName}
+                                  onChange={(e) =>
+                                      setCredentials({ ...credentials, firstName: e.target.value })}/>
+                </Form.Group>
+                <Form.Group className="mb-3 signin-box" controlId="signinLastName">
+                    <Form.Label> Last Name </Form.Label>
+                    <Form.Control type="lastName" placeholder="LastName"
+                                  value = {credentials.lastName}
+                                  onChange={(e) =>
+                                      setCredentials({ ...credentials, lastName: e.target.value })}/>
+                </Form.Group>
+                <Form.Group className="mb-3 signin-box" controlId="signinEmail">
+                    <Form.Label> Email </Form.Label>
+                    <Form.Control type="email" placeholder="Email"
+                                  value = {credentials.email}
+                                  onChange={(e) =>
+                                      setCredentials({ ...credentials, email: e.target.value })}/>
+                </Form.Group>
+                <Form.Group className="mb-3 signin-box" controlId="signinPhone">
+                    <Form.Label> Phone Number </Form.Label>
+                    <Form.Control type="phone" placeholder="Phone Number"
+                                  value = {credentials.phone}
+                                  onChange={(e) =>
+                                      setCredentials({ ...credentials, phone: e.target.value })}/>
+                </Form.Group>
             </Form>
 
-            <Button  className = "btn-signin" onClick={signup}>Sign Up</Button>
+            <Button  className = "btn-signin" onClick={signup} disabled={!isFormValid()}>Sign Up</Button>
         </div>
     );
 }

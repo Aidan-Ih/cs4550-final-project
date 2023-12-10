@@ -2,11 +2,14 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import axios from 'axios'
 import { useState, useEffect } from 'react';
 import "./index.css"
-import { useParams } from 'react-router';
-import '@fortawesome/fontawesome-free/css/all.min.css';
-
-
-
+import { useParams, useNavigate } from 'react-router';
+import { useDispatch, useSelector } from "react-redux";
+import * as client from "./client";
+import * as userClient from "../Profile/client";
+import { findCommentsForEvent, createComment, updateComment, deleteComment } from "./client";
+import { findAllUsers } from "../Profile/client";
+import { Link } from 'react-router-dom';
+import { setLoggedInUser} from "../reducer";
 
 function Details() {
     const [event, setEvent] = useState({
@@ -14,12 +17,25 @@ function Details() {
         events: []
     });
     const { tournamentId } = useParams();
+    const [comments, setComments] = useState([]);
+    const [comment, setComment] = useState({ eventId: tournamentId });
+    const [users, setUsers] = useState([])
+    const _loggedInUser = useSelector((state) => state.reducer.loggedInUser);
+    const [loggedInUser, setLoggedInUser_] = useState(_loggedInUser);
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    const fetchAccount = async () => {
+        const account = await userClient.account();
+        setLoggedInUser_(account);
+        dispatch(setLoggedInUser(account));
+    };
 
     const getEventById = async () => {
         const response = await axios.get(`http://localhost:4000/getEvent/${tournamentId}`)
         const data = response.data[0]
         setEvent(data)
-        console.log(data)
+        //console.log(data)
     }
 
     const convertDay = (num) => {
@@ -45,54 +61,162 @@ function Details() {
     }
 
     const getEntrants = (events) => {
-        console.log(events);
+        //console.log(events);
         var entrants = []
     }
 
+    const getComments = async () => {
+        const comments = await client.findCommentsForEvent(tournamentId);
+        setComments(comments);
+    }
+    const findUsers = async () => {
+        const users = await userClient.findAllUsers();
+        setUsers(users);
+    }
+    const createComment = async (eventId, commentData) => {
+        try {
+            const newComment = await client.createComment(eventId, commentData);
+            // Update comments state with the new comment
+            setComments(prevComments => [...prevComments, newComment]);
+            setComment(prevComment => ({ ...prevComment, comment: '' }));
+        } catch (error) {
+            // Handle error if comment creation fails
+            console.error("Error creating comment:", error);
+        }
+    };
+    const navigateToProfile = (uid) => {
+        if (loggedInUser) {
+            navigate(`/profile/${uid}`);
+        } else {
+            navigate("/login");
+        }
+    }
+    const deleteComment = async (commentId) => {
+        await client.deleteComment(commentId);
+        setComments(prevComments => prevComments.filter(comment => comment._id !== commentId));
+    }
+    const [editedComment, setEditedComment] = useState({});
+
+    const updateComment = async () => {
+        try {
+            await client.updateComment(editedComment);
+            // Find the index of the edited comment in the state
+            const index = comments.findIndex(comment => comment._id === editedComment._id);
+            // Update the comment in the state
+            if (index !== -1) {
+                const updatedComments = [...comments];
+                updatedComments[index] = editedComment;
+                setComments(updatedComments);
+                setEditedComment({}); // Reset edited comment
+            }
+        } catch (error) {
+            // Handle error if comment update fails
+            console.error("Error updating comment:", error);
+        }
+    };
+
+
     useEffect(() => {
-        getEventById()
-    }, []);
+        getEventById();
+        getComments();
+        findUsers();
+        fetchAccount();
+    }, [tournamentId]);
 
     return (
         <div>
+            {/*<h1>Details</h1>*/}
+            {/* <div>
+                <button className="btn btn-danger" onClick={getEventById}>GET EVENT</button>
+            </div> */}
+            <div>
 
-            <div className= "row">
-                <h1>Event Details</h1>
-            </div>
-            {/*<div>*/}
-            {/*    <button className="btn btn-danger" onClick={getEventById}>GET EVENT</button>*/}
-            {/*</div>*/}
-            <div className = " row title">{event.name}</div>
-            <div className = "row event-details">
-                <div className= "col-3 nopad">
-                    <img className="event-profile-image"
-                         src={event.images.find((i) => i.type === "profile").url}></img>
-                </div>
-                <br/> <br/>
-                <div className=" col-5 list-group">
-                    <div className="list-group-item">
-                        <i className="fa-solid fa-location-dot"></i> {event.venueAddress}
+                <div className = "title">{event.name}</div>
+                <div className = "row event-details">
+                    <div className = "col-3">
+                        <img className="event-profile-image"
+                             src={event.images.find((i) => i.type === "profile").url}></img>
                     </div>
-                    <div className="list-group-item">
-                        <i className="fa-regular fa-calendar"></i> {getDateFromUnix(event.startAt)}
-                    </div>
-                    <div className="list-group-item">
-                        <div >
-                            <h2>Events:</h2>
-
-                            {event.events.map((e, i) => {
-                                return (
-                                    <div key={i}>
-                                        {e.name}
-                                    </div>
-                                )
-                            })}
+                    <div className="col-5 list-group">
+                        <div className="list-group-item">
+                            <i className="fa-solid fa-location-dot"></i>{event.venueAddress}
                         </div>
+                        <div className="list-group-item">
+                            <i className="fa-solid fa-calendar"></i> {getDateFromUnix(event.startAt)}
+                        </div>
+                        <div className="list-group-item">
+                            <div >
+                                <h2>Events:</h2>
+
+                                {event.events.map((e, i) => {
+                                    return (
+                                        <div key={i}>
+                                            {e.name}
+                                        </div>
+                                    )
+                                })}
+                            </div>
+                        </div>
+                        <div className="list-group-item">
+                            <h2>Entrants:</h2>
+                            {getEntrants(event.events)}
+                        </div>
+                        <div className="list-group-item">
+                            <h2>Comments:</h2>
+                            {/* only admins can leave comments */}
+                            {loggedInUser && loggedInUser.role === "ADMIN" && (
+                                <div>
+                                    <input type="textarea"
+                                           value={comment.comment}
+                                           onChange={(e) =>
+                                               setComment({ ...comment, comment: e.target.value, userId: loggedInUser._id })
+                                           }></input>
+                                    <button onClick={() => { createComment(tournamentId, comment) }}>Post Comment</button>
+                                </div>
+                            )}
+                            {comments.length > 0 && (
+                                <ul>
+                                    {comments.map((commentItem, index) => {
+                                        const user = users.find(user => user._id === commentItem.userId);
+                                        const username = user ? user.username : 'Unknown User';
+                                        const isEditing = editedComment._id === commentItem._id;
+
+                                        return (
+                                            <li key={index}>
+                                                <div className="flex-row d-flex">
+                                                    <div onClick={() => navigateToProfile(commentItem.userId)}>{username}</div>: {isEditing ? (
+                                                    <input
+                                                        type="text"
+                                                        value={editedComment.comment}
+                                                        onChange={(e) => setEditedComment({ ...editedComment, comment: e.target.value })}
+                                                    />
+                                                ) : (
+                                                    commentItem.comment
+                                                )}
+                                                    {loggedInUser && loggedInUser._id === commentItem.userId && (
+                                                        <div>
+                                                            {isEditing ? (
+                                                                <button onClick={updateComment}>
+                                                                    Save
+                                                                </button>
+                                                            ) : (
+                                                                <button onClick={() => setEditedComment(commentItem)}>
+                                                                    Edit
+                                                                </button>
+                                                            )}
+                                                            <button onClick={() => deleteComment(commentItem._id)}>
+                                                                <i className="fa-solid fa-trash"></i>
+                                                            </button>
+                                                        </div>
+                                                    )}
+                                                </div>
+                                        </li>
+                                    );
+                                })}
+                            </ul>
+                        )}
                     </div>
-                    <div className="list-group-item">
-                        <h2>Entrants:</h2>
-                        {getEntrants(event.events)}
-                    </div>
+                </div>
                 </div>
             </div>
         </div>

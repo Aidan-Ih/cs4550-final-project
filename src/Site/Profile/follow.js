@@ -1,7 +1,6 @@
 import { useLocation, useNavigate, useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import profilePic from "./images/profilepic.png"
 import "./index.css";
 import * as client from "./client";
 import {Button} from "react-bootstrap";
@@ -73,9 +72,6 @@ function Follow() {
         <div className="container">
             {user && (
                 <div className="row">
-                    <div className="col-lg-2 col-md-3 col-sm-12 profile-left">
-                        <img className="profile-picture" src={profilePic} alt="Profile" />
-                    </div>
                     <div className="col-lg-2 col-md-6 col-sm-12">
                         <nav className="nav nav-pills nav-fill follow-top-bar">
                             <Button className={`nav-link ${pathname.includes("followers") && "active"}`}

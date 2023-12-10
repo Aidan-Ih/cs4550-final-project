@@ -6,6 +6,7 @@ import {Button} from "react-bootstrap";
 function Login() {
     return(
         <div>
+            <h1>Log In</h1>
             <Link to={`/SignIn`}>
                 <Button className="btn-signin">Sign In</Button>
             </Link>
