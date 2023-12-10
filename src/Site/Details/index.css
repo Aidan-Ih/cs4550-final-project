@@ -23,7 +23,7 @@
 
 .list-group-item {
     width: 500px;
-    border: black 2px solid !important;
+    border: black 1px solid !important;
     margin-bottom: 5px;
     border-radius: 5px;
 }
