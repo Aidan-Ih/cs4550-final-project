@@ -27,6 +27,7 @@ function Homepage() {
         const account = await client.account();
         setLoggedInUser_(account);
         dispatch(setLoggedInUser(account));
+        console.log(account);
     };
 
     useEffect(() => {
@@ -58,6 +59,7 @@ function Homepage() {
 
     const saveUser = async (user) => {
         await client.updateUser(user);
+        setLoggedInUser_(user);
         //navigate(`/profile/${id}`)
     };
     // Function to handle adding an event to favorites

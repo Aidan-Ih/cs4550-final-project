@@ -21,13 +21,14 @@ function NavBar() {
                     </Link>
                 </div>
                 <Button onClick={() => {
+                    console.log(loggedInUser);
                     if (loggedInUser != null) {
                         navigate("/Profile");
                     } else {
                         navigate("/Login");
                     }
                 }}
-                        className="btn-profile navbar-link" href="#profile">
+                        className="btn-profile navbar-link">
                     <i className="fa-solid fa-user fa-2x nav-icon"></i>
                 </Button>
             </div>

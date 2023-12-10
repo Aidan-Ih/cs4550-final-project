@@ -4,11 +4,22 @@ import { useState, useEffect } from 'react';
 import "./searchresults.css"
 import { useParams } from 'react-router';
 import { useSearchParams, Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import * as userClient from "../Profile/client";
+import { setLoggedInUser} from "../reducer";
 
 function SearchResult() {
-    const [searchParams, setSearchParams] = useSearchParams()
-    const [events, setEvents] = useState([])
-    console.log(searchParams)
+    const [searchParams, setSearchParams] = useSearchParams();
+    const [events, setEvents] = useState([]);
+    const _loggedInUser = useSelector((state) => state.reducer.loggedInUser);
+    const [loggedInUser, setLoggedInUser_] = useState(_loggedInUser);
+    const dispatch = useDispatch();
+
+    const fetchAccount = async () => {
+        const account = await userClient.account();
+        setLoggedInUser_(account);
+        dispatch(setLoggedInUser(account));
+    }
 
     const search = async () => {
         const name = searchParams.get("name")
@@ -48,7 +59,8 @@ function SearchResult() {
     }
 
     useEffect(() => {
-        search()
+        search();
+        fetchAccount();
     }, []);
 
     return (

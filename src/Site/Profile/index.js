@@ -87,16 +87,20 @@ function Profile() {
         // Check if loggedInUser is not in the followers list
         const isNotFollowing = !user.followers.includes(loggedInUser._id);
         if (isNotFollowing) {
-            // If loggedInUser is a follower, don't proceed further
+            // If loggedInUser is not a follower, don't proceed further
             return;
         }
     
-        // Check if user is in the following list of loggedInUser
-        const isFollowing = loggedInUser.following.includes(user._id);
-        if (isFollowing) {
-            // If loggedInUser is not following the user, don't proceed further
-            return;
-        }
+        // // Check if user is in the following list of loggedInUser
+        // const isFollowing = loggedInUser.following.includes(user._id.toString());
+        // if (isFollowing) {
+        //     console.log(loggedInUser);
+        //     console.log(user._id);
+        //     console.log(loggedInUser.following);
+        //     console.log("logged in user is not following this user")
+        //     // If loggedInUser is not following the user, don't proceed further
+        //     return;
+        // }
     
         // If both are following each other, update the lists
         const newFollowerList = user.followers.filter((uid) => uid !== loggedInUser._id);
@@ -123,12 +127,12 @@ function Profile() {
     // Adds the logged in user's ID to the follower list of this user
     // Adds this user's ID to the following list of the logged in user
     const handleFollow = () => {
-        // Check if loggedInUser is already following the user
-        const isAlreadyFollowing = loggedInUser.following.includes(user._id);
-        if (isAlreadyFollowing) {
-            // If already following, don't proceed further
-            return;
-        }
+        // // Check if loggedInUser is already following the user
+        // const isAlreadyFollowing = loggedInUser.following.includes(user._id);
+        // if (isAlreadyFollowing) {
+        //     // If already following, don't proceed further
+        //     return;
+        // }
     
         // Check if user is already in the followers list
         const isAlreadyFollower = user.followers.includes(loggedInUser._id);
