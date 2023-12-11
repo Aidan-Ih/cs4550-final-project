@@ -10,6 +10,7 @@ import * as client from "../Profile/client";
 import { useDispatch } from "react-redux";
 import { setLoggedInUser} from "../reducer";
 import { useEffect } from "react";
+import {Button} from "react-bootstrap";
 
 function Homepage() {
     const dispatch = useDispatch();
@@ -90,7 +91,7 @@ function Homepage() {
             {loggedInUser && (
                 <div className="user-content">
                     <div>
-                        <h3>Hi, {loggedInUser.firstName}</h3>
+                        <h3>Hi, {loggedInUser.firstName}!</h3>
                         {loggedInUser.favoriteEvents.length > 0 && (
                             <div>
                                 <h5>Favorited Events:</h5>
@@ -115,7 +116,7 @@ function Homepage() {
                             </div>
                         )}
                         {loggedInUser.favoriteEvents.length === 0 && (
-                            <h5>No Events Favorited</h5>
+                            <h5>No Events Favorited. </h5>
                         )}
                     </div>
                 </div>)}
@@ -140,21 +141,21 @@ function Homepage() {
                                 {/* Allow user to favorite event if they are logged in and have not faved this event yet */}
                                 {loggedInUser && !loggedInUser.favoriteEvents.includes(e.id) && (
                                     <div>
-                                        <button
+                                        <Button
                                             className="btn btn-sm favorite-btn"
                                             onClick={() => addToFavorites(e.id)}>
-                                            <i className="fa-regular fa-heart"></i>
-                                        </button>
+                                            <i className="fa-regular fa-heart fa-2x"></i>
+                                        </Button>
                                     </div>
                                 )}
                                 {/* Allow user to unfavorite event if they are logged in and have faved this event already */}
                                 {loggedInUser && loggedInUser.favoriteEvents.includes(e.id) && (
                                     <div>
-                                        <button
+                                        <Button
                                             className="btn btn-sm favorite-btn"
                                             onClick={() => removeFromFavorites(e.id)}>
-                                            <i className="fa-solid fa-heart"></i>
-                                        </button>
+                                            <i className="fa-solid fa-heart fa-2x"></i>
+                                        </Button>
                                     </div>
                                 )}
                             </div>

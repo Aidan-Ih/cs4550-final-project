@@ -26,3 +26,9 @@
 .tournament-title {
     font-size: 20px;
 }
+
+.favorite-btn {
+    background-color: transparent !important;
+    border: transparent 2px solid !important;
+    padding: 10px;
+}
