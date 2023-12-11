@@ -140,7 +140,7 @@ function Homepage() {
                                 {loggedInUser && !loggedInUser.favoriteEvents.includes(e.id) && (
                                     <div>
                                         <button
-                                            className="btn btn-sm favorite-btn"
+                                            className="btn btn-sm"
                                             onClick={() => addToFavorites(e.id)}>
                                             <i className="fa-regular fa-heart fa-2x heart-empty"></i>
                                         </button>
@@ -150,7 +150,7 @@ function Homepage() {
                                 {loggedInUser && loggedInUser.favoriteEvents.includes(e.id) && (
                                     <div>
                                         <button
-                                            className="btn btn-sm favorite-btn"
+                                            className="btn btn-sm"
                                             onClick={() => removeFromFavorites(e.id)}>
                                             <i className="fa-solid fa-heart heart-filled fa-2x"></i>
                                         </button>
