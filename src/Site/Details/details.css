@@ -1,0 +1,85 @@
+.event-profile-image {
+    width: 280px;
+    height: 280px;
+    border: black 1px solid;
+}
+
+.title {
+    text-decoration: underline;
+    font-size: 30px;
+    text-align: center;
+    padding-bottom: 20px;
+}
+
+.event-details {
+    margin-left: 20px;
+    padding-left: 20px;
+    justify-content: center;
+}
+
+.header-title {
+    margin-left: 20px;
+}
+
+.list-group-item {
+    width: 500px;
+    border: black 1px solid !important;
+    margin-bottom: 5px;
+    border-radius: 5px;
+}
+
+.nopad {
+    padding: 0px;
+    margin: 0px;
+}
+
+.btn-post {
+    background-color: white !important;
+    margin-right: 5px;
+    border: darkgreen 2px solid !important;
+    color: darkgreen !important;
+    float: right !important;
+}
+
+.btn-post:hover {
+    background-color: darkgreen !important;
+    border: white 2px solid;
+    color: white !important;
+}
+
+.btn-edit {
+    background-color: white !important;
+    margin-right: 5px;
+    border: darkgreen 2px solid !important;
+    color: darkgreen !important;
+    margin-left: 10px;
+}
+
+.btn-edit:hover {
+    background-color: darkgreen !important;
+    border: white 2px solid;
+    color: white !important;
+}
+
+.comment {
+    width: 40%;
+}
+
+.comment-text {
+    padding-bottom: 5px;
+    padding-top: 5px;
+}
+
+.btn-delete {
+    background-color: white !important;
+    margin-right: 5px;
+    border: darkred 2px solid !important;
+    color: darkred !important;
+    justify-content: center;
+}
+
+.btn-delete:hover {
+    background-color: darkred !important;
+    border: white 2px solid;
+    color: white !important;
+}

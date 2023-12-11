@@ -3,6 +3,7 @@
   border: #282c34 3px solid;
   border-radius: 25px;
   margin-top: 30px;
+  margin-bottom: 30px;
 }
 
 .profile-picture {
@@ -114,4 +115,56 @@
   background-color: darkred;
   border: white 2px solid;
   color: white;
+}
+
+.eventListItem {
+  width: 95%;
+}
+
+.btn-admin {
+  background-color: white;
+  border: darkslateblue 2px solid;
+  color: darkslateblue;
+}
+
+.btn-admin:hover {
+  background-color: darkslateblue;
+  background-color: white;
+  border: darkslateblue 2px solid;
+  color: darkslateblue;
+}
+
+.btn-delete {
+  background-color: white;
+  margin-right: 5px;
+  justify-content: center;
+  border: darkred 2px solid;
+  color: darkred;
+  text-decoration: underline darkred;
+  margin-left: 10px
+}
+
+.btn-delete:hover {
+  background-color: darkred;
+  border: white 2px solid;
+  color: white;
+}
+
+.font-bold {
+  font-weight: bold;
+}
+
+.admin-details {
+  margin-left: 20px;
+  padding-left: 20px;
+  justify-content: center;
+}
+
+.btn-width {
+  width: 30%;
+  margin-top: 30px;
+}
+
+.account-title {
+  margin-bottom: 30px;
 }

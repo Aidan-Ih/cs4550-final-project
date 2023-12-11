@@ -4,12 +4,18 @@
 }
 
 .user-content {
-    padding: 50px;
+    padding: 30px;
+    padding-left: 0px;
+    margin-right: 300px;
+    margin-left: 260px;
     background-color: lightblue;
+    border-radius: 10px;
+    margin-bottom: 40px;
 }
 
 .eventListItem {
-    margin: 10px;
+    margin: 20px;
+    margin-left:40px;
     background-color: white;
     font-size: 18px;
 }
@@ -25,4 +31,21 @@
 
 .tournament-title {
     font-size: 20px;
+}
+
+
+.heart-filled {
+    color: hotpink;
+}
+
+.heart-empty {
+    color: white;
+}
+
+.title {
+    margin-bottom: 10px;
+}
+
+.text-center {
+    text-align: center;
 }

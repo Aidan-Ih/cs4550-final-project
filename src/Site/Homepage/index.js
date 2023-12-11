@@ -87,12 +87,12 @@ function Homepage() {
         <div>
             {/* <h1>Homepage</h1> */}
             {loggedInUser && (
-                <div className="user-content">
+                <div>
                     <div>
-                        <h3>Hi, {loggedInUser.firstName}</h3>
+                        <h3 className = "title">Hi, {loggedInUser.firstName}!</h3>
                         {loggedInUser.favoriteEvents.length > 0 && (
-                            <div>
-                                <h5>Favorited Events:</h5>
+                            <div className= "user-content">
+                                <h5 className= "text-center">Your Favorite Events:</h5>
                                 {events
                                     .filter((event) => loggedInUser.favoriteEvents.includes(event.id))
                                     .map((e, i) => {
@@ -114,14 +114,14 @@ function Homepage() {
                             </div>
                         )}
                         {loggedInUser.favoriteEvents.length === 0 && (
-                            <h5>No Events Favorited</h5>
+                            <h5 className = "text-center">No Events Favorited. Press the heart to favorite!</h5>
                         )}
                     </div>
                 </div>)}
 
             <div className="anon-content">
                 {/* <button className="btn btn-danger" onClick={getRecentEvents}>GET EVENTS</button> */}
-                <h1>Upcoming Events</h1>
+                <h1 className = "title"> Upcoming Events</h1>
                 <div className="list-group eventListContainer">
                     {events.map((e, i) => {
                         return (
@@ -142,7 +142,7 @@ function Homepage() {
                                         <button
                                             className="btn btn-sm favorite-btn"
                                             onClick={() => addToFavorites(e.id)}>
-                                            <i className="fa-regular fa-heart"></i>
+                                            <i className="fa-regular fa-heart fa-2x heart-empty"></i>
                                         </button>
                                     </div>
                                 )}
@@ -152,7 +152,7 @@ function Homepage() {
                                         <button
                                             className="btn btn-sm favorite-btn"
                                             onClick={() => removeFromFavorites(e.id)}>
-                                            <i className="fa-solid fa-heart"></i>
+                                            <i className="fa-solid fa-heart heart-filled fa-2x"></i>
                                         </button>
                                     </div>
                                 )}

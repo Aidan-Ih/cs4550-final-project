@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
 import axios from 'axios'
 import { useState, useEffect } from 'react';
-import "./index.css"
+import "./details.css"
 import { useParams, useNavigate } from 'react-router';
 import { useDispatch, useSelector } from "react-redux";
 import * as client from "./client";
@@ -10,6 +10,7 @@ import { findCommentsForEvent, createComment, updateComment, deleteComment } fro
 import { findAllUsers } from "../Profile/client";
 import { Link } from 'react-router-dom';
 import { setLoggedInUser} from "../reducer";
+import {Button, Form} from "react-bootstrap";
 
 function Details() {
     const [event, setEvent] = useState({
@@ -166,12 +167,17 @@ function Details() {
                             {/* only admins can leave comments */}
                             {loggedInUser && loggedInUser.role === "ADMIN" && (
                                 <div>
-                                    <input type="textarea"
-                                           value={comment.comment}
-                                           onChange={(e) =>
-                                               setComment({ ...comment, comment: e.target.value, userId: loggedInUser._id })
-                                           }></input>
-                                    <button onClick={() => { createComment(tournamentId, comment) }}>Post Comment</button>
+                                    <Form>
+                                        <Form.Group className="mb-3" controlId="formComment">
+                                            <Form.Control type="textera"
+                                                          value = {comment.comment}
+                                                          onChange={(e) =>
+                                                              setComment({ ...comment, comment: e.target.value, userID: loggedInUser._id })}/>
+                                        </Form.Group>
+                                    </Form>
+
+                                    <Button className = "btn-post" onClick={() => { createComment(tournamentId, comment) }}>Post</Button>
+                                    <span><br/><br/></span>
                                 </div>
                             )}
                             {comments.length > 0 && (
@@ -182,9 +188,11 @@ function Details() {
                                         const isEditing = editedComment._id === commentItem._id;
 
                                         return (
-                                            <li key={index}>
-                                                <div className="flex-row d-flex">
-                                                    <div onClick={() => navigateToProfile(commentItem.userId)}>{username}</div>: {isEditing ? (
+                                            <div key={index}>
+                                                <div className="flex-row d-flex comment-text">
+                                                    <div onClick={() => navigateToProfile(commentItem.userId)}>
+                                                        <i className="fa-solid fa-user"></i> {username}
+                                                    </div>: {isEditing ? (
                                                     <input
                                                         type="text"
                                                         value={editedComment.comment}
@@ -196,21 +204,21 @@ function Details() {
                                                     {loggedInUser && loggedInUser._id === commentItem.userId && (
                                                         <div>
                                                             {isEditing ? (
-                                                                <button onClick={updateComment}>
+                                                                <Button onClick={updateComment}>
                                                                     Save
-                                                                </button>
+                                                                </Button>
                                                             ) : (
-                                                                <button onClick={() => setEditedComment(commentItem)}>
+                                                                <Button className = "btn-edit" onClick={() => setEditedComment(commentItem)}>
                                                                     Edit
-                                                                </button>
+                                                                </Button>
                                                             )}
-                                                            <button onClick={() => deleteComment(commentItem._id)}>
+                                                            <Button className = "btn-delete" onClick={() => deleteComment(commentItem._id)}>
                                                                 <i className="fa-solid fa-trash"></i>
-                                                            </button>
+                                                            </Button>
                                                         </div>
                                                     )}
                                                 </div>
-                                        </li>
+                                        </div>
                                     );
                                 })}
                             </ul>

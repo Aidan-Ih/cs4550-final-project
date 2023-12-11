@@ -208,17 +208,17 @@ function Profile() {
                     <div className="col-lg-3 col-md-3 col-sm-12">
                         {/* Show this button only if this is NOT the profile of the logged in user and the logged in user is following this user */}
                         {loggedInUser._id !== user._id && user.followers.includes(loggedInUser._id) &&
-                            <Button onClick={() => { handleUnfollow(); }}>Unfollow</Button>}
+                            <Button  className = "btn-signout" onClick={() => { handleUnfollow(); }}>Unfollow</Button>}
                         {/* Show this button only if this is NOT the profile of the logged in user and the logged in user is NOT following this user */}
                         {loggedInUser._id !== user._id && !user.followers.includes(loggedInUser._id) &&
-                            <Button onClick={() => { handleFollow(); }}>Follow</Button>}
+                            <Button className = "btn-edit" onClick={() => { handleFollow(); }}>Follow</Button>}
                         {loggedInUser._id !== user._id && loggedInUser.role === "ADMIN" &&
                             <Link to="settings">
-                                <Button>Admin Settings</Button>
+                                <Button className = "btn-admin">Admin Settings</Button>
                             </Link>}
                     </div>
                     <div>
-                        <h4>Favorites</h4>
+                        <h4>Favorite Events</h4>
                         {events
                             .filter((event) => user.favoriteEvents.includes(event.id))
                             .map((e, i) => {
