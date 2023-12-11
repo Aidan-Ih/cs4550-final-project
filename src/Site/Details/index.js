@@ -90,7 +90,7 @@ function Details() {
         } else {
             navigate("/login");
         }
-    }
+    } 
     const deleteComment = async (commentId) => {
         await client.deleteComment(commentId);
         setComments(prevComments => prevComments.filter(comment => comment._id !== commentId));
