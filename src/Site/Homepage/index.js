@@ -10,15 +10,17 @@ import * as client from "../Profile/client";
 import { useDispatch } from "react-redux";
 import { setLoggedInUser} from "../reducer";
 import { useEffect } from "react";
+import {Button} from "react-bootstrap";
 
 function Homepage() {
     const dispatch = useDispatch();
     const [events, setEvents] = useState([]);
     const _loggedInUser = useSelector((state) => state.reducer.loggedInUser);
     const [loggedInUser, setLoggedInUser_] = useState(_loggedInUser);
+    const API_BASE = process.env.REACT_APP_API_BASE;
 
     const getRecentEvents = async () => {
-        const response = await axios.get("http://localhost:4000/getRecent");
+        const response = await axios.get(`${API_BASE}/getRecent`);
         const data = response.data;
         setEvents(data);
         console.log(data);
@@ -90,6 +92,7 @@ function Homepage() {
                 <div>
                     <div>
                         <h3 className = "title">Hi, {loggedInUser.firstName}!</h3>
+
                         {loggedInUser.favoriteEvents.length > 0 && (
                             <div className= "user-content">
                                 <h5 className= "text-center">Your Favorite Events:</h5>
@@ -144,6 +147,7 @@ function Homepage() {
                                             onClick={() => addToFavorites(e.id)}>
                                             <i className="fa-regular fa-heart fa-2x heart-empty"></i>
                                         </button>
+
                                     </div>
                                 )}
                                 {/* Allow user to unfavorite event if they are logged in and have faved this event already */}
