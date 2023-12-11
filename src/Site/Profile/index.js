@@ -16,6 +16,7 @@ function Profile() {
     const [user, setUser] = useState(null);
     const [loggedInUser, setLoggedInUser_] = useState(null);
     const navigate = useNavigate();
+    const API_BASE = process.env.REACT_APP_API_BASE;
     const refreshPage = () => {
         window.location.reload();
     }
@@ -63,7 +64,7 @@ function Profile() {
         return formatted
     }
     const getRecentEvents = async () => {
-        const response = await axios.get("http://localhost:4000/getRecent");
+        const response = await axios.get(`${API_BASE}/getRecent`);
         const data = response.data;
         setEvents(data);
     }
