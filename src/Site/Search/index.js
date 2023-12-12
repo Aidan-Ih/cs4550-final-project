@@ -1,9 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
-import axios from 'axios'
 import React, { useState, useEffect } from 'react';
 import "./search.css"
-import { useParams } from 'react-router';
-import { useSearchParams, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Button, Form } from "react-bootstrap";
 import { useDispatch, useSelector } from 'react-redux';
 import * as userClient from "../Profile/client";
@@ -50,10 +48,6 @@ function Search() {
             <Link to={`/SearchResult/?name=${searchName}&before=${searchBefore}&after=${searchAfter}`}>
                 <Button className="btn-search"> Search </Button>
             </Link>
-
-            {/*{searchName}*/}
-            {/*{searchBefore}*/}
-            {/*{searchAfter}*/}
 
         </div>
 

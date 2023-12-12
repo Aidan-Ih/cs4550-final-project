@@ -30,8 +30,8 @@ function SearchResult() {
         after = Math.floor(new Date(after).getTime() / 1000)
         
         const API_BASE = process.env.REACT_APP_API_BASE;
+        //const API_BASE = "http://localhost:4000";
         const url = `${API_BASE}/searchEvent/${name}/${before}/${after}`;
-       // const url = `http://localhost:4000/searchEvent/${name}/${before}/${after}`
         console.log(url)
         const response = await axios.get(url)
         const data = response.data

@@ -1,5 +1,4 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
-import { getRecentTournamentsQuery } from './requests';
 import axios from 'axios'
 import { useState } from 'react';
 import "./index.css"
@@ -10,7 +9,6 @@ import * as client from "../Profile/client";
 import { useDispatch } from "react-redux";
 import { setLoggedInUser} from "../reducer";
 import { useEffect } from "react";
-import {Button} from "react-bootstrap";
 
 function Homepage() {
     const dispatch = useDispatch();
@@ -18,6 +16,7 @@ function Homepage() {
     const _loggedInUser = useSelector((state) => state.reducer.loggedInUser);
     const [loggedInUser, setLoggedInUser_] = useState(_loggedInUser);
     const API_BASE = process.env.REACT_APP_API_BASE;
+    //const API_BASE = "http://localhost:4000";
 
     const getRecentEvents = async () => {
         const response = await axios.get(`${API_BASE}/getRecent`);
@@ -60,7 +59,7 @@ function Homepage() {
     }
 
     const saveUser = async (user) => {
-        await client.updateUser(user);
+        await client.updateUser(user, true);
         setLoggedInUser_(user);
         //navigate(`/profile/${id}`)
     };

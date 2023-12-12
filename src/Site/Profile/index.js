@@ -17,6 +17,7 @@ function Profile() {
     const [loggedInUser, setLoggedInUser_] = useState(null);
     const navigate = useNavigate();
     const API_BASE = process.env.REACT_APP_API_BASE;
+    //const API_BASE = "http://localhost:4000";
     const refreshPage = () => {
         window.location.reload();
     }

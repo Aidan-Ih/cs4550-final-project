@@ -18,27 +18,18 @@ function AdminSettings() {
         await client.deleteUser(user);
         navigate("/");
     }
-    const makeAdmin = async (user) => {
-        setUser({ ...user, role: "ADMIN" });
-        await client.updateUser(user, false);
-        navigate(`/profile/${user._id}`);
+    const makeAdmin = async (userData) => {
+        const adminUser = { ...userData, role: "ADMIN" };
+        await client.updateUser(adminUser, false);
+        navigate(`/profile/${userData._id}`);
     }
     useEffect(() => {
         findUserById(id);
-        console.log(user);
     }, []);
     return (
-        <div>
+        <div className="container">
             <h1 className = "account-title">Account Settings</h1>
             {user &&
-                // <div className = "admin-details">
-                //     <div className = "admin-details"> <span className = "font-bold"> Username:</span> {user.username}</div>
-                //     <div> <span className = "font-bold"> First Name: </span>  {user.firstName}</div>
-                //     <div> <span className = "font-bold"> Last Name:</span>  {user.lastName}</div>
-                //     <div> <span className = "font-bold"> Phone:</span>  {user.phone}</div>
-                //     <div> <span className = "font-bold"> Email: </span> {user.email}</div>
-                // </div> &&
-                //
                 <div>
                     <div className = "row admin-details">
                         <div className = "col-3 font-bold">

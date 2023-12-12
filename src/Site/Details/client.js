@@ -1,8 +1,7 @@
 import axios from "axios";
-//export const BASE_API = process.env.REACT_APP_API_BASE;
-//export const BASE_API = "http://localhost:4000/api"
+//export const BASE_API = "http://localhost:4000";
 export const BASE_API = process.env.REACT_APP_API_BASE;
-export const COMMENTS_API = `${BASE_API}/events`;
+export const COMMENTS_API = `${BASE_API}/api/events`;
 
 export const deleteComment = async (commentId) => {
     const response = await axios

@@ -2,9 +2,8 @@ import axios from "axios";
 const request = axios.create({
     withCredentials: true,
 });
-//export const BASE_API = process.env.REACT_APP_API_BASE;
-//export const BASE_API = "http://localhost:4000/api"
 export const BASE_API = process.env.REACT_APP_API_BASE;
+//export const BASE_API = "http://localhost:4000";
 export const USERS_API = `${BASE_API}/api/users`;
 export const signin = async (credentials) => {
     const response = await request.post(`${USERS_API}/signin`, credentials);
@@ -16,7 +15,6 @@ export const account = async () => {
 };
 export const updateUser = async (user, thisUser) => {
     const response = await request.put(`${USERS_API}/${user._id}`, {user, thisUser});
-    console.log(thisUser);
     return response.data;
 };
 export const findAllUsers = async () => {

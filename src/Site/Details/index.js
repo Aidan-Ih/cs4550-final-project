@@ -6,11 +6,8 @@ import { useParams, useNavigate } from 'react-router';
 import { useDispatch, useSelector } from "react-redux";
 import * as client from "./client";
 import * as userClient from "../Profile/client";
-import { findCommentsForEvent, createComment, updateComment, deleteComment } from "./client";
-import { findAllUsers } from "../Profile/client";
-import { Link } from 'react-router-dom';
-import { setLoggedInUser} from "../reducer";
-import {Button, Form} from "react-bootstrap";
+import { setLoggedInUser } from "../reducer";
+import { Button, Form } from "react-bootstrap";
 
 function Details() {
     const [event, setEvent] = useState({
@@ -26,6 +23,7 @@ function Details() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const API_BASE = process.env.REACT_APP_API_BASE;
+    //const API_BASE = "http://localhost:4000";
 
     const fetchAccount = async () => {
         const account = await userClient.account();
@@ -37,7 +35,6 @@ function Details() {
         const response = await axios.get(`${API_BASE}/getEvent/${tournamentId}`);
         const data = response.data[0]
         setEvent(data)
-        //console.log(data)
     }
 
     const convertDay = (num) => {
@@ -63,7 +60,6 @@ function Details() {
     }
 
     const getEntrants = (events) => {
-        //console.log(events);
         var entrants = []
     }
 
@@ -92,7 +88,7 @@ function Details() {
         } else {
             navigate("/login");
         }
-    } 
+    }
     const deleteComment = async (commentId) => {
         await client.deleteComment(commentId);
         setComments(prevComments => prevComments.filter(comment => comment._id !== commentId));
@@ -127,109 +123,106 @@ function Details() {
 
     return (
         <div>
-            {/*<h1>Details</h1>*/}
-            {/* <div>
-                <button className="btn btn-danger" onClick={getEventById}>GET EVENT</button>
-            </div> */}
             <div>
 
-                <div className = "title">{event.name}</div>
-                <div className = "row event-details">
-                    <div className = "col-3">
-                        <img className="event-profile-image"
-                             src={event.images.find((i) => i.type === "profile").url}></img>
+                <div className="title">{event.name}</div>
+                <div className="row event-details">
+                    <div className="col-md-3">
+                        <img className="event-profile-image img-fluid"
+                            src={event.images.find((i) => i.type === "profile").url}></img>
                     </div>
-                    <div className="col-5 list-group">
-                        <div className="list-group-item">
-                            <i className="fa-solid fa-location-dot"></i>{event.venueAddress}
-                        </div>
-                        <div className="list-group-item">
-                            <i className="fa-solid fa-calendar"></i> {getDateFromUnix(event.startAt)}
-                        </div>
-                        <div className="list-group-item">
-                            <div >
-                                <h2>Events:</h2>
+                    <div className="col-md-5 col-sm-12">
+                        <div className="list-group">
+                            <div className="list-group-item">
+                                <i className="fa-solid fa-location-dot"></i>{event.venueAddress}
+                            </div>
+                            <div className="list-group-item">
+                                <i className="fa-solid fa-calendar"></i> {getDateFromUnix(event.startAt)}
+                            </div>
+                            <div className="list-group-item">
+                                <div >
+                                    <h2>Events:</h2>
 
-                                {event.events.map((e, i) => {
-                                    return (
-                                        <div key={i}>
-                                            {e.name}
-                                        </div>
-                                    )
-                                })}
+                                    {event.events.map((e, i) => {
+                                        return (
+                                            <div key={i}>
+                                                {e.name}
+                                            </div>
+                                        )
+                                    })}
+                                </div>
+                            </div>
+                            <div className="list-group-item">
+                                <h2>Entrants:</h2>
+                                {getEntrants(event.events)}
+                            </div>
+                            <div className="list-group-item">
+                                <h2>Comments:</h2>
+                                {/* only admins can leave comments */}
+                                {loggedInUser && loggedInUser.role === "ADMIN" && (
+                                    <div>
+                                        <Form>
+                                            <Form.Group className="mb-3" controlId="formComment">
+                                                <Form.Control type="textera"
+                                                    value={comment.comment}
+                                                    onChange={(e) =>
+                                                        setComment({ ...comment, comment: e.target.value, userId: loggedInUser._id })} />
+                                            </Form.Group>
+                                        </Form>
+
+                                        <Button className="btn-post" onClick={() => { createComment(tournamentId, comment) }}>Post</Button>
+                                        <span><br /><br /></span>
+                                    </div>
+                                )}
+                                {comments.length > 0 && (
+                                    <ul>
+                                        {comments.map((commentItem, index) => {
+                                            const user = users.find(user => user._id === commentItem.userId);
+                                            const username = user ? user.username : 'Unknown User';
+                                            const isEditing = editedComment._id === commentItem._id;
+
+                                            return (
+                                                <div key={index}>
+                                                    <div className="flex-row d-flex comment-text">
+                                                        <div onClick={() => navigateToProfile(commentItem.userId)}>
+                                                            <i className="fa-solid fa-user"></i> {username}
+                                                        </div>: {isEditing ? (
+                                                            <input
+                                                                type="text"
+                                                                value={editedComment.comment}
+                                                                onChange={(e) => setEditedComment({ ...editedComment, comment: e.target.value })}
+                                                            />
+                                                        ) : (
+                                                            commentItem.comment
+                                                        )}
+                                                        {loggedInUser && loggedInUser._id === commentItem.userId && (
+                                                            <div>
+                                                                {isEditing ? (
+                                                                    <Button onClick={updateComment}>
+                                                                        Save
+                                                                    </Button>
+                                                                ) : (
+                                                                    <Button className="btn-edit" onClick={() => setEditedComment(commentItem)}>
+                                                                        Edit
+                                                                    </Button>
+                                                                )}
+                                                                <Button className="btn-delete" onClick={() => deleteComment(commentItem._id)}>
+                                                                    <i className="fa-solid fa-trash"></i>
+                                                                </Button>
+                                                            </div>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            );
+                                        })}
+                                    </ul>
+                                )}
                             </div>
                         </div>
-                        <div className="list-group-item">
-                            <h2>Entrants:</h2>
-                            {getEntrants(event.events)}
-                        </div>
-                        <div className="list-group-item">
-                            <h2>Comments:</h2>
-                            {/* only admins can leave comments */}
-                            {loggedInUser && loggedInUser.role === "ADMIN" && (
-                                <div>
-                                    <Form>
-                                        <Form.Group className="mb-3" controlId="formComment">
-                                            <Form.Control type="textera"
-                                                          value = {comment.comment}
-                                                          onChange={(e) =>
-                                                              setComment({ ...comment, comment: e.target.value, userID: loggedInUser._id })}/>
-                                        </Form.Group>
-                                    </Form>
-
-                                    <Button className = "btn-post" onClick={() => { createComment(tournamentId, comment) }}>Post</Button>
-                                    <span><br/><br/></span>
-                                </div>
-                            )}
-                            {comments.length > 0 && (
-                                <ul>
-                                    {comments.map((commentItem, index) => {
-                                        const user = users.find(user => user._id === commentItem.userId);
-                                        const username = user ? user.username : 'Unknown User';
-                                        const isEditing = editedComment._id === commentItem._id;
-
-                                        return (
-                                            <div key={index}>
-                                                <div className="flex-row d-flex comment-text">
-                                                    <div onClick={() => navigateToProfile(commentItem.userId)}>
-                                                        <i className="fa-solid fa-user"></i> {username}
-                                                    </div>: {isEditing ? (
-                                                    <input
-                                                        type="text"
-                                                        value={editedComment.comment}
-                                                        onChange={(e) => setEditedComment({ ...editedComment, comment: e.target.value })}
-                                                    />
-                                                ) : (
-                                                    commentItem.comment
-                                                )}
-                                                    {loggedInUser && loggedInUser._id === commentItem.userId && (
-                                                        <div>
-                                                            {isEditing ? (
-                                                                <Button onClick={updateComment}>
-                                                                    Save
-                                                                </Button>
-                                                            ) : (
-                                                                <Button className = "btn-edit" onClick={() => setEditedComment(commentItem)}>
-                                                                    Edit
-                                                                </Button>
-                                                            )}
-                                                            <Button className = "btn-delete" onClick={() => deleteComment(commentItem._id)}>
-                                                                <i className="fa-solid fa-trash"></i>
-                                                            </Button>
-                                                        </div>
-                                                    )}
-                                                </div>
-                                        </div>
-                                    );
-                                })}
-                            </ul>
-                        )}
                     </div>
-                </div>
                 </div>
             </div>
         </div>
-
     );
 }
 
